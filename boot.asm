@@ -13,7 +13,7 @@ mov bx, msg1                    ;print 16bit BIOS int
 call print_bios
 
 mov bx, 0x0002                  ;starting sector to load
-mov cx, 0x0001                  ;number of sectors to load
+mov cx, 0x0002                  ;number of sectors to load
 mov dx, 0x7E00                  ;save to 0x7E00
 
 call load_bios                  ;load more code 16Bit BIOS
@@ -42,6 +42,8 @@ dw 0xAA55
 bootsector_extended:
 begin_protected:
 
+[bits 32]
+
 call clean_protected
 
 call detect_lm_protected
@@ -51,6 +53,8 @@ call print_protected
 
 call init_pt_protected
 
+call elevate_protected
+
 jmp $
 
 ; 32 bit includes
@@ -58,6 +62,8 @@ jmp $
 %include "protected_mode/print.asm"
 %include "protected_mode/detect_lm.asm"
 %include "protected_mode/init_pt.asm"
+%include "protected_mode/gdt.asm"
+%include "protected_mode/elevate.asm"
 
 ;storage
 vga_start:                  equ 0x000B8000                          ; vga location
@@ -65,13 +71,31 @@ vga_extent:                 equ 80 * 25 * 2                         ; vga memory
 style_wb:                   equ 0xA3                                ; text style :D
 kernel_start:               equ 0x00100000
 
-protected_alert:        db `[info] 64 bit mode supported.`, 0
+protected_alert:        db `64 bit mode supported.`, 0
 
 ; essentials(1):
 times 512-($-bootsector_extended) db 0x00
 
 ; 64 bit
-long_mode_init:
+begin_long_mode:
+[bits 64]
+
+mov rdi, style_blue
+call clear_long
+
+mov rdi, style_blue
+mov rsi, long_mode_note
+call print_long
+
+jmp $
+
+;includes
+%include "long_mode/clear.asm"
+%include "long_mode/print.asm"
+
+;storage
+long_mode_note:                                 db `[info] Running in full 64 bit.`, 0
+style_blue:                                     equ 0x1F
 
 ;essentials (64b)
-times 512-($-long_mode_init) db 0x00
+times 512-($-begin_long_mode) db 0x00

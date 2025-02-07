@@ -52,5 +52,5 @@ lm_not_found_protected:
 
 
 ; storage
-lm_not_found_str:                       db `[error] Long mode not supported on this machine. Halting...`, 0
-cpuid_not_found_str:                    db `[error] Cpuid or cpuid extended functions not found on this machine. Halting...`, 0
+lm_not_found_str:                       db `Long mode not supported on this machine.`, 0
+cpuid_not_found_str:                    db `Cpuid or cpuid extended functions not found on this machine.`, 0

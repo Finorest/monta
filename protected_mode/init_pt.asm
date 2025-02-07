@@ -1,5 +1,5 @@
 ; nasm
-[bits 16]
+[bits 32]
 
 ;code
 init_pt_protected:
@@ -18,7 +18,7 @@ init_pt_protected:
     add edi, 0x1000
     mov dword[edi], 0x3003
     add edi, 0x1000
-    mov dword[edi], 0x3003
+    mov dword[edi], 0x4003
 
     add edi, 0x1000
     mov ebx, 0x00000003
