@@ -44,22 +44,34 @@ begin_protected:
 
 call clean_protected
 
+call detect_lm_protected
+
 mov esi, protected_alert
 call print_protected
+
+call init_pt_protected
 
 jmp $
 
 ; 32 bit includes
 %include "protected_mode/clear.asm"
 %include "protected_mode/print.asm"
+%include "protected_mode/detect_lm.asm"
+%include "protected_mode/init_pt.asm"
 
 ;storage
 vga_start:                  equ 0x000B8000                          ; vga location
 vga_extent:                 equ 80 * 25 * 2                         ; vga memory (80 wide, 25 height, one char is 2 bytes)
 style_wb:                   equ 0xA3                                ; text style :D
+kernel_start:               equ 0x00100000
 
-protected_alert:        db `Entered 32 bit.`, 0
-
+protected_alert:        db `[info] 64 bit mode supported.`, 0
 
 ; essentials(1):
 times 512-($-bootsector_extended) db 0x00
+
+; 64 bit
+long_mode_init:
+
+;essentials (64b)
+times 512-($-long_mode_init) db 0x00
