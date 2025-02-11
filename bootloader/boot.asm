@@ -1,6 +1,12 @@
-; nasm:
-[bits 16]
 [org 0x7C00]
+
+jmp begin_real
+kernel_size:                db 0
+
+begin_real:
+
+[bits 16]
+
 
 ; stack
 mov bp, 0x0500
@@ -13,7 +19,8 @@ mov bx, msg1                    ;print 16bit BIOS int
 call print_bios
 
 mov bx, 0x0002                  ;starting sector to load
-mov cx, 0x0002                  ;number of sectors to load
+mov cx, [kernel_size]           ;number of sectors to load
+add cx, 2
 mov dx, 0x7E00                  ;save to 0x7E00
 
 call load_bios                  ;load more code 16Bit BIOS
@@ -69,7 +76,6 @@ jmp $
 vga_start:                  equ 0x000B8000                          ; vga location
 vga_extent:                 equ 80 * 25 * 2                         ; vga memory (80 wide, 25 height, one char is 2 bytes)
 style_wb:                   equ 0xA3                                ; text style :D
-kernel_start:               equ 0x00100000
 
 protected_alert:        db `64 bit mode supported.`, 0
 
@@ -87,6 +93,8 @@ mov rdi, style_blue
 mov rsi, long_mode_note
 call print_long
 
+call kernel_start
+
 jmp $
 
 ;includes
@@ -96,6 +104,7 @@ jmp $
 ;storage
 long_mode_note:                                 db `[info] Running in full 64 bit.`, 0
 style_blue:                                     equ 0x1F
+kernel_start:                                   equ 0x8200
 
 ;essentials (64b)
 times 512-($-begin_long_mode) db 0x00

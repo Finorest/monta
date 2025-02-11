@@ -1,10 +1,28 @@
-(nasm boot.asm)
-result=$?
+#!/bin/bash
 
-if [ $result -eq "0" ]
+rm -f os.img
+(make -C kernel clean)
+
+(cd bootloader ; nasm -o boot boot.asm)
+boot_result=$?
+
+(make -C kernel)
+make_result=$?
+
+echo Make Result: $make_result
+
+if [ "$boot_result" = "0" ] && [ "$make_result" = "0" ]
 then
-    echo "Build finished with success"
-    (qemu-system-x86_64 -drive format=raw,file=boot)
+    kernel_size=$(wc -c < kernel/kernel)
+    kernel_sectors=$(( ($kernel_size + 511) / 512 ))
+    printf %02x $kernel_sectors | xxd -r -p | dd of=bootloader/boot bs=1 seek=2 count=1 conv=notrunc
+
+    cp bootloader/boot ./os.img
+    cat kernel/kernel >> os.img
+
+    echo "Build finished successfully"
+    (qemu-system-x86_64 -drive format=raw,file=os.img)
 else
-    echo "Build failed. Error code: $result"
+    result=`expr $boot_result + $make_result`
+    echo "Build failed with error code $result. See output for more info."
 fi
