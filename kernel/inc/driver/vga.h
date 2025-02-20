@@ -5,6 +5,7 @@
 
 #define VGA_START 0xB8000
 #define VGA_WIDTH 80
+#define VGA_HEIGHT 25
 #define VGA_EXTENT 80 * 25
 
 #define COLOR_BLK 0     // Black
@@ -47,6 +48,9 @@ void show_cursor();
 void hide_cursor();
 
 void advance_cursor();
+void reverse_cursor();
 void set_cursor_pos(u8_t x, u8_t y);
+
+void scroll_line();
 
 #endif
