@@ -11,7 +11,7 @@ int main() {
     const char *second = "\nIt also wraps properly (maybe)\t\t (i hope)";
     putstr(second, COLOR_BLK, COLOR_LCY);
 
-    const char *third = "\n\n\n\n\n\n \n \n \n \n But sadly xt and text and text \n\n\n\n\n\n\n\n\n shdjhjsh mowowowoowowowoowowowoowowooowo \n\n\n\n\n woowowoowowoowowwowoowowo";
+    const char *third = "\n\n\n\n\n\n \n \n \n \n But sadly test and text and text \n\n\n\n\n\n\n\n\n shdjhjsh mowowowoowowowoowowowoowowooowo \n\n\n\n\n woowowoowowoowowwowoowowo";
     putstr(third, COLOR_BLK, COLOR_LCY);
 
     return 0;
