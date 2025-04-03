@@ -73,7 +73,7 @@ void isr_install(){
     set_idt_gate(29, (u64_t) isr_29);
     set_idt_gate(30, (u64_t) isr_30);
     set_idt_gate(31, (u64_t) isr_31);
-    
+
     set_idt();
 
     __asm__ volatile("sti");

@@ -5,7 +5,7 @@ int main() {
     isr_install();
     
     set_cursor_pos(0, 0);
-    clearwin(COLOR_BLK, COLOR_LCY)
+    clearwin(COLOR_BLK, COLOR_LCY);
 
     const char *first = "\n\n\nThe advanced vga driver works! (maybe) ";
     putstr(first, COLOR_BLK, COLOR_LCY);

@@ -39,8 +39,9 @@ QUADWORD_SIZE:          equ 0x08
     pop rdi
 %endmacro
 
-%macro SAVE_REGS_AND_CALL_HANDLER 1
+%macro SAVE_REGS_AND_CALL_HANDLER 1    ; Save all registers since calling context is unknown
     PUSHALL
+
     mov rdx, rsp
     mov rdi, [rsp + REGISTER_SIZE]                      ; ISR Number is last on the stack
     mov rsi, [rsp + REGISTER_SIZE + QUADWORD_SIZE]      ; Error Code is first on the stack

@@ -3,11 +3,11 @@
 idt_gate main_idt[IDT_ENTRIES];
 idt_register main_idt_reg;
 
-void set_idt() {
-  main_idt_reg.base = (u64_t) &main_idt;
-  main_idt_reg.limit = (IDT_ENTRIES * sizeof(idt_gate)) - int16_t;
-  
-  __asm__ volatile ("lidt (%0)" : : "r" (&main_idt_reg));
+void set_idt(){
+    main_idt_reg.base = (u64_t) &main_idt;
+    main_idt_reg.limit = (IDT_ENTRIES * sizeof(idt_gate)) - 1;
+
+    __asm__ volatile ("lidt (%0)" : : "r" (&main_idt_reg));
 }
 
 void set_idt_gate(u8_t gate_number, u64_t handler_address){

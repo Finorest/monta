@@ -4,7 +4,7 @@
 #include <types.h>
 
 #define KERNEL_CS 0x08
-#define INT_ATTR 0x8E
+#define INT_ATTR 0x8E           // 0b10001110
 #define IDT_ENTRIES 256
 
 typedef struct __attribute__((packed)){
@@ -13,13 +13,17 @@ typedef struct __attribute__((packed)){
 } idt_register;
 
 typedef struct __attribute__((packed)) {
-    u16_t base_low;
-    u16_t cs_selector;
-    u8_t  zero;
-    u8_t  attributes;
-    u16_t base_middle;
-    u32_t base_high;
-    u32_t reserved;
+    u16_t base_low;             // Low 16 bits of the address to jump to
+    u16_t cs_selector;          // Code segment selector
+    u8_t  zero;                 // Must always be 0
+    u8_t  attributes;           // Flag bytes
+                                //      - Bit 7:     Interrupt is present
+                                //      - Bits 6-5:  Privelege level of caller (0=kernel..3=user)
+                                //      - Bit 4:     Set to 0 for interrupt gates
+                                //      - Bits 3-0:  Always 1110 for 32 bit interrupt gate
+    u16_t base_middle;          // Middle 16 bits of the address to jump to
+    u32_t base_high;            // High 16 bits of the address to jump to
+    u32_t reserved;             // Must always be 0
 } idt_gate;
 
 extern idt_gate main_idt[IDT_ENTRIES];
