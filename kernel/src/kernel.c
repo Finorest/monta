@@ -1,6 +1,9 @@
 #include <driver/vga.h>
+#include <cpu/idt.h>
 
 int main() {
+    IDT_Init();
+  
     set_cursor_pos(0, 0);
     clearwin(COLOR_BLK, COLOR_LCY);
 
