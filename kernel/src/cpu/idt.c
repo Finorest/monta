@@ -5,7 +5,7 @@
 IDTEntry g_IDT[256];
 IDTDescriptor g_IDTDescriptor = { sizeof(g_IDT) - 1, g_IDT };
 
-extern void __attribute__((cdecl)) IDTLoad(IDTDescriptor* idtDescriptor);
+extern void __attribute__((sysv_abi)) IDTLoad(IDTDescriptor* idtDescriptor);
 
 void IDT_SetGate(int interrupt, void* base, u16_t segmentDescriptor, u8_t flags) {
   g_IDT[interrupt].BaseLow = ((u16_t)base) & 0xFFFF;
