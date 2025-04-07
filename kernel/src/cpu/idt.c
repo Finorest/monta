@@ -6,10 +6,10 @@ IDTEntry g_IDT[256];
 IDTDescriptor g_IDTDescriptor;
 
 void IDTLoad() {
-  g_IDTDescriptor.base = &g_IDT;
+  g_IDTDescriptor.Ptr = &g_IDT;
   g_IDTDescriptor.limit = (256 * sizeof(IDTEntry)) - 1;
   
-  __asm__ volatile ("lidt (%0)" : : "r" (&idtDescriptor));
+  __asm__ volatile ("lidt (%0)" : : "r" (&g_IDTDescriptor));
 }
 
 void IDT_SetGate(int interrupt, void* base, u16_t segmentDescriptor, u8_t flags) {
