@@ -3,9 +3,14 @@
 #include <util/binary.h>
 
 IDTEntry g_IDT[256];
-IDTDescriptor g_IDTDescriptor = { sizeof(g_IDT) - 1, g_IDT };
+IDTDescriptor g_IDTDescriptor;
 
-extern void __attribute__((sysv_abi)) IDTLoad(IDTDescriptor* idtDescriptor);
+void IDTLoad() {
+  g_IDTDescriptor.base = &g_IDT;
+  g_IDTDescriptor.limit = (256 * sizeof(IDTEntry)) - 1;
+  
+  __asm__ volatile ("lidt (%0)" : : "r" (&idtDescriptor));
+}
 
 void IDT_SetGate(int interrupt, void* base, u16_t segmentDescriptor, u8_t flags) {
   g_IDT[interrupt].BaseLow = ((u16_t)base) & 0xFFFF;
@@ -26,5 +31,5 @@ void IDT_DisableGate(int interrupt) {
 }
 
 void IDT_Init() {
-  IDTLoad(&g_IDTDescriptor);
+  IDTLoad();
 }
