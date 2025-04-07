@@ -15,7 +15,7 @@ typedef struct {
 
 typedef struct {
   u16_t limit;
-  IDTEntry* Ptr;
+  u64_t Ptr;
 } __attribute__((packed)) IDTDescriptor;
 
 typedef enum {

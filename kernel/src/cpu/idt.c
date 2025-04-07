@@ -6,7 +6,7 @@ IDTEntry g_IDT[256];
 IDTDescriptor g_IDTDescriptor;
 
 void IDTLoad() {
-  g_IDTDescriptor.Ptr = &g_IDT;
+  g_IDTDescriptor.Ptr = (u64_t) &g_IDT;
   g_IDTDescriptor.limit = (256 * sizeof(IDTEntry)) - 1;
   
   __asm__ volatile ("lidt (%0)" : : "r" (&g_IDTDescriptor));
