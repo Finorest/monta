@@ -36,7 +36,7 @@ typedef enum {
 void IDT_Init();
 void IDT_DisableGate(int interrupt);
 void IDT_EnableGate(int interrupt);
-void IDT_SetGate(int interrupt, void* base, u16_t segmentDescriptor, u8_t flags);
+void IDT_SetGate(int interrupt, u64_t address, u8_t flags);
 void IDTLoad();
 
 #endif
