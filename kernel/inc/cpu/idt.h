@@ -3,6 +3,8 @@
 
 #include <types.h>
 
+#define KERNEL_SC 0x08
+
 typedef struct {
   u16_t BaseLow;
   u16_t SegmentSelector;

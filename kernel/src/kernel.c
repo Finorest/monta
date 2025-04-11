@@ -1,8 +1,8 @@
 #include <driver/vga.h>
-#include <cpu/idt.h>
+#include <cpu/isr.h>
 
 int main() {
-    IDT_Init();
+    ISR_Init();
   
     set_cursor_pos(0, 0);
     clearwin(COLOR_BLK, COLOR_LCY);

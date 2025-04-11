@@ -12,13 +12,13 @@ void IDTLoad() {
   __asm__ volatile ("lidt (%0)" : : "r" (&g_IDTDescriptor));
 }
 
-void IDT_SetGate(int interrupt, void* base, u16_t segmentDescriptor, u8_t flags) {
-  g_IDT[interrupt].BaseLow = ((u16_t)base) & 0xFFFF;
-  g_IDT[interrupt].SegmentSelector = segmentDescriptor;
+void IDT_SetGate(int interrupt, u64_t address, u8_t flags) {
+  g_IDT[interrupt].BaseLow = (u16_t) (address & 0xFFFF);
+  g_IDT[interrupt].SegmentSelector = KERNEL_SC;
   g_IDT[interrupt].Reserved = 0;
   g_IDT[interrupt].Flags = flags;
-  g_IDT[interrupt].BaseMiddle = ((u16_t)base >> 16) & 0xFFFF;
-  g_IDT[interrupt].BaseHigh = ((u32_t)base >> 32) & 0xFFFFFFFF;
+  g_IDT[interrupt].BaseMiddle = (u16_t) ((address >> 16) & 0xFFFF);
+  g_IDT[interrupt].BaseHigh = (u32_t) ((address >> 32) & 0xFFFFFFFF);
   g_IDT[interrupt].Reserved1 = 0;
 }
 
