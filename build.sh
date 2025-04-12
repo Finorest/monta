@@ -21,7 +21,6 @@ then
     cat kernel/kernel >> os.img
 
     echo "Build finished successfully"
-    (qemu-system-x86_64 -drive format=raw,file=os.img)
 else
     result=`expr $boot_result + $make_result`
     echo "Build failed with error code $result. See output for more info."

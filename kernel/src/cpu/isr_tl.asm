@@ -57,22 +57,30 @@ REG_SIZE:           equ 0x78
 %macro ISR_NOERR 1
   global ISR%1
   ISR%1:
+    cli
+    
     push qword 0        ; error code
     push qword %1       ; int number
     ISR_CALL ISR_Handler
     
     add rsp, 0x10
+    
+    sti
     iretq
 %endmacro
 
 %macro ISR_ERR 1
   global ISR%1    ; This pushes error code.
   ISR%1:
+    cli
+    
     ; err code is already pushed automatically
     push qword %1
     ISR_CALL ISR_Handler
     
     add rsp, 0x10
+    
+    sti
     iretq
 %endmacro
 

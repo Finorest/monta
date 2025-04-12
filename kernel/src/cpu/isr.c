@@ -41,6 +41,8 @@ void ISR_Init() {
     IDT_EnableGate(i);
     
   IDT_Init();
+  
+  __asm__ volatile("sti");
 }
 
 __attribute__((sysv_abi))
