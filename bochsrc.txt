@@ -1,0 +1,4 @@
+cpu: count=1
+ata0-master: type=disk, path=os.img
+boot: disk
+log: bout.txt

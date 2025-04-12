@@ -47,8 +47,6 @@ void ISR_Init() {
 
 __attribute__((sysv_abi))
 void ISR_Handler(u64_t isr_num, u64_t err_code, Registers* regs) {
-  const char *mesg = "\nInterrupt ";
-  const char *mesg_num = isr_num;
-  putstr(mesg_num, COLOR_RED, COLOR_BLK);
+  const char *mesg = "INTERRUPT!";
   putstr(mesg, COLOR_RED, COLOR_BLK);
 }
