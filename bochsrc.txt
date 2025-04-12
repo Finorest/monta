@@ -8,7 +8,7 @@ boot: disk
 
 display_library: sdl2
 romimage: file=/usr/share/bochs/BIOS-bochs-latest
-vgaromimage: file=/usr/share/bochs/VGABIOS-bochs-latest
+vgaromimage: file=/usr/share/bochs/VGABIOS-lgpl-latest
 
 log: bout.txt
 panic: action=ask
