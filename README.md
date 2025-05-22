@@ -1,4 +1,5 @@
 <h1>Mulbontea - a bootable program</h1>
+<b>IMPORTANT</b><br> While the main branch is the one with most features for now, my work on it has stopped. Look at a xyzy_bootloader branch, while it does not have too much functions for now, it will be existing as a main one, just when it will have at least IRQ/ISR, so when it will have more functions compared to main. <br><hr>
 Hi, so this is an bootable program, basically pretty much it czn boot and setup some things that are kind of useless for now. 
 Why I am writing this? Honestly I dont know. But these repositories have it, so why not me.
 How to build it? What do i need to build it?
