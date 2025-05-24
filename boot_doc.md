@@ -15,16 +15,4 @@ This file has multiple catogories. These are split with tabs. No tab line is the
             msg:    db `example`, 0
             mov bx, msg
             call mPrint
-
-2. Disk:
-    LBA to CHS
-        Name: disk_lba_chs
-        Info: Convert an LBA address to CHS.
-        Args:
-            ax: LBA address
-        Return:
-            cl: sector number
-            ch: cylinder
-            dx: head
-        Usage:
             

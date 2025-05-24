@@ -16,10 +16,8 @@ mbKR=$(BUILDd)/kernel.bin
 img: $(BUILDd)/img.img
 
 $(BUILDd)/img.img: bootloader kernel
-	dd if=/dev/zero of=$(BUILDd)/img.img bs=512 count=3320
-	mkfs.fat -F 32 -n "MTEA-BI" $(BUILDd)/img.img
-	dd if=$(BUILDd)/boot.bin of=$(BUILDd)/img.img conv=notrunc
-	mcopy -i $(dIMAG) $(mbKR) "::kernel.bin"
+	cp $(mbBT) $(BUILDd)/img.img
+	truncate -s 1660k $(dIMAG)
 
 # Bootloader
 bootloader: $(BUILDd)/boot.bin
