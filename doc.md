@@ -1,17 +1,15 @@
-The docs.
+The main docs.
 
-This file has multiple catogories. These are split with tabs. No tab line is the line for categories. 1 tab line is meant for entries in this category, usually the name of a function. 2 tab line is meant for information about above entries. Each entry should have: Name, Info, Args, Return, Usage. Each of these can have tabs for explaining parts of these, in exceptions of the "Usage" entry. This entry is only code, so tabs or colons and other special characters in this guide doesnt matter in the tab space of "Usage". "-none" in all entries except of "Usage" means nothing was specified, or it doesnt exist.
+This is a Bootable Interface (BI). Why not an operating system? Because people already have
+so many requirements for a thing to be called an OS, so here it is, BI, and I dont have to 
+care about what in the world people have to say.
 
-1. Printing:
-    mPrint:
-        name: mPrint
-        Info: Main Print Function.
-        Args:
-            bx: text
-                must have '0' at the end
-        Return:
-            -none
-        Usage:
-            msg:    db `example`, 0
-            mov bx, msg
-            call mPrint
+Second thing I already propably did, and I will do intentionaly, is to break some standards.
+This is my thing, I dont care what some guy working with some 1990 companies said to be 
+correct, this is my thing, so I can do what in the world I want to.
+
+This BI is split into 2 parts, bootloader, and the kernel. Generally bootloader is just 1 sector for now, but because of some things FAT32 wants it needs 2 sectors for itself - the fsinfo and backup. Fsinfo is at the sector 2, Backup at 3
+(yes, I know the standard for backup is 6, but I just like above I dont care, what do they want me to do, add some code
+and then when I will see "oops, I am near sector 6, I have to jump"??? No, I wont, it is at sector 3). Techinically it is
+not even at sector 3, because I just fiiled it with zeros, so maybe in future, the space is here. Kernel is after sector 
+3 excluded. 
