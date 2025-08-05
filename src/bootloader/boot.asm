@@ -1,29 +1,46 @@
 [bits 16]
 [org 0x7C00]
 
-; Main
-main:
-    ; setup regs
-    mov ax, 0
-    mov ds, ax
-    mov es, ax
+xor ax, ax
+mov ss, ax
+mov es, ax
+mov ds, ax
+mov cs, ax
+mov sp, 0x0500
 
-    ;setup stack regs
-    mov ss, ax
-    mov sp, 0x7C00                                                       ; stack grows down in memory so for now fine I hope
+call print_16b_nl
 
-    mov bx, mMsg
-    call mPrint
+mov bx, MSG
+call print_16b
 
-    cli
-    hlt                                                                         ; the end
+mov bx, 0x7E00                                                                      ; my disk will be here in ram
+mov ch, 0x01
+call disk_16b
 
-.loop:
-    jmp .loop                                                                   ; keep cpu busy
+call print_16b_nl
+mov bx, EXT_MSG
+call print_16b
 
-%include "src/bootloader/utils/display/print.asm"
+;;;;;
 
-mMsg:       db `hii`, 0
+MSG:
+    db 'hello', 0
+
+;;;;;
+jmp $
+;;;;;
+
+%include "src/bootloader/16b_modules/print.asm"
+%include "src/bootloader/16b_modules/disk.asm"
+
+;;;;;
 
 times 510-($-$$) db 0
 dw 0xAA55
+
+boot_ext:
+
+EXT_MSG:
+    db 'hiiii', 0
+
+times 512-($-boot_ext) db 0
