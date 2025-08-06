@@ -17,9 +17,7 @@ mov bx, 0x7E00                                                                  
 mov ch, 0x01
 call disk_16b
 
-call print_16b_nl
-mov bx, EXT_MSG
-call print_16b
+call mode_up_32b
 
 ;;;;;
 
@@ -32,6 +30,8 @@ jmp $
 
 %include "src/bootloader/16b_modules/print.asm"
 %include "src/bootloader/16b_modules/disk.asm"
+%include "src/bootloader/16b_modules/gdt.asm"
+%include "src/bootloader/16b_modules/mode_up.asm"
 
 ;;;;;
 
@@ -39,8 +39,8 @@ times 510-($-$$) db 0
 dw 0xAA55
 
 boot_ext:
+pm_begin:
 
-EXT_MSG:
-    db 'hiiii', 0
+jmp $
 
 times 512-($-boot_ext) db 0
